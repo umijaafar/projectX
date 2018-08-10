@@ -1,0 +1,43 @@
+#include <SPI.h>
+#include <SoftwareSerial.h>
+#include <EEPROM.h>
+#include <TouchScreen.h>
+#define BLUETOOTH_RX 10
+#define BLUETOOTH_TX 11
+ 
+SoftwareSerial BT(BLUETOOTH_RX, BLUETOOTH_TX);
+ 
+void setup(void) {
+    // int passed here should match your Bluetooth's set baud rate.
+    // Default is almost always 9600
+    BT.begin(9600);
+    delay(500);
+ 
+    BT.print("AT");
+    delay(500);
+ 
+    BT.print("AT+VERSION");
+    delay(500);
+ 
+    // renames your BT device name to My-Sweet-Project
+    String nameCommand = "AT+NAME" + "My-Sweet-Project";
+    BT.print(nameCommand);
+    delay(500);
+ 
+    if (BT.available() > 0)
+        Serial.println(BT.readString());
+}
+
+
+/////////////////////////////
+#include <SoftwareSerial.h>
+
+SoftwareSerial bt(10,11);
+
+void setup(void){
+  
+}
+
+void loop(void){
+  
+}
